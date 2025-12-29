@@ -34,6 +34,14 @@ The project focuses on API integration, asynchronous JavaScript, and clean UI de
 
 ---
 
+## 📸 Screenshots
+
+### Home Page
+![Home Page](DEMO1.png)
+
+### Search & AQI Results
+![Search](DEMO2.png)
+
 ## 📂 Project Structure
 
 openAQI/
@@ -68,15 +76,5 @@ openAQI/
 - Improved error handling for unavailable locations
 - Support for more air quality data sources
 
----
 
-## 🤝 Contributing
-
-Contributions, issues, and feature requests are welcome.
-
----
-
-## 📄 License
-
-This project is open-source and available under the MIT License.
 
