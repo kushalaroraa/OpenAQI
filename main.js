@@ -11,7 +11,7 @@ let aqiResult;
     const GEO_URL = "https://api.openweathermap.org/geo/1.0/direct";
     const AIR_URL = "https://api.openweathermap.org/data/2.5/air_pollution";
     
-    const OPENWEATHER_KEY = "762ce7294016a18b42f52c3774607814";
+    const OPENWEATHER_KEY = "YOUR_OPENWEATHER_KEY_HERE"; // Replace with your OpenWeather API key
 
     const cityInput = document.querySelector("#city-input");
     const checkBtn = document.querySelector("#chkbtn");
