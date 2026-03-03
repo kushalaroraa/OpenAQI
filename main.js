@@ -9,9 +9,9 @@ let aqiResult;
 (function () {
 
     const GEO_URL = "https://api.openweathermap.org/geo/1.0/direct";
-    const AIR_URL = "http://api.weatherapi.com/v1/current.json";
-    const WEATHER_API_KEY = "YOUR_WEATHER_API_KEY";
-    const OPENWEATHER_KEY = "YOUR_OPENWEATHER_KEY";
+    const AIR_URL = "https://api.openweathermap.org/data/2.5/air_pollution";
+    
+    const OPENWEATHER_KEY = "762ce7294016a18b42f52c3774607814";
 
     const cityInput = document.querySelector("#city-input");
     const checkBtn = document.querySelector("#chkbtn");
@@ -44,16 +44,26 @@ let aqiResult;
  // logic to fetch aqi from lat & lon
     async function fetchAQI(lat, lon) {
         try {
-            const url = `${AIR_URL}?key=${WEATHER_API_KEY}&q=${lat},${lon}&aqi=yes`;
+            // OpenWeather Air Pollution API expects lat & lon and appid
+            const url = `${AIR_URL}?lat=${lat}&lon=${lon}&appid=${OPENWEATHER_KEY}`;
             const res = await fetch(url);
 
-            if (!res.ok) throw new Error("AQI fetch failed");
+            if (!res.ok) {
+                const txt = await res.text().catch(() => '');
+                throw new Error(`AQI fetch failed: ${res.status} ${txt}`);
+            }
 
-            let data = await res.json();
-            return data.current.air_quality["pm2_5"];  
+            const data = await res.json();
+            // Response shape for OpenWeather air_pollution: { list: [ { components: { pm2_5: ... }, ... } ] }
+            if (!data.list || data.list.length === 0) throw new Error('No AQI data returned');
+            const pm25 = data.list[0].components && data.list[0].components.pm2_5;
+            if (pm25 === undefined || pm25 === null) throw new Error('PM2.5 value missing');
+            return pm25;
         } catch (err) {
-            console.log(err);
-            alert("Error fetching AQI.");
+            console.error(err);
+            // Return null so callers can handle the failure gracefully
+            alert('Error fetching AQI. See console for details.');
+            return null;
         }
     }
 
@@ -77,11 +87,22 @@ let aqiResult;
 
     // ui card update
     function updateCard(aqi,lat,lon) {
+        // If aqi is null, show a clear message and neutral styling
+        if (aqi === null || aqi === undefined || Number.isNaN(aqi)) {
+            aqiIcon.className = 'fa-solid fa-question';
+            aqiText.innerHTML = `AQI data not available`;
+            categoryText.innerHTML = ``;
+            adviceText.innerHTML = ``;
+            coordsText.innerHTML = `Coordinates: <b>${lat}</b>, <b>${lon}</b>`;
+            card.style.background = `#777`;
+            card.style.color = `#fff`;
+            return;
+        }
+
         const { cat, color, icon, advice } = getAQICategory(aqi);
 
         aqiIcon.className = `fa-solid ${icon}`;
-        aqiText.innerHTML = `Air Quality Index (PM2.5) in your area: <b>${Math.round(aqi)}</b> 
-µg/m³`;
+        aqiText.innerHTML = `Air Quality Index (PM2.5) in your area: <b>${Math.round(aqi)}</b> \nµg/m³`;
         categoryText.innerHTML = `Category: <b>${cat}</b>`;
         adviceText.innerHTML = `OpenAQI Suggestion: <b>${advice}</b>`;
         coordsText.innerHTML = `Coordinates: <b>${lat}</b>, <b>${lon}</b>`;
