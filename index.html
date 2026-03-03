@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenAQI</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="main.css">
+    <script src="main.js" defer></script>
+
+     <script src="https://kit.fontawesome.com/79658850ee.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header>
+        <navbar id="nav-left">
+            <div id="logo">
+                <img src="openaqi.png">
+            </div>
+            <ul id="navbar-ul">
+                <li> <a href="#">Home </a></li>
+                <li> <a href="#">Contact Us </a> </li>
+            </ul>
+            <section class="controls">
+                <span class="search-icon">
+                   <i class="fa-solid fa-magnifying-glass"></i>
+                </span>
+                <input id="city-input-nav" placeholder="Enter city (e.g. Delhi, Mumbai, London)" />
+                <button id="locBtn" title="use-my-location"><i class="fa-solid fa-location"></i></button> 
+                
+            </section>
+
+            <section id="right">
+                <div>
+                    <input type="checkbox" class="checkbox" id="checkbox">
+                    <label for="checkbox" class="checkbox-label">
+                    <i class="fa-solid fa-moon"></i>
+                    <i class="fas fa-sun"></i>
+                    <span class="ball"></span>
+                    </label>
+                </div>
+            </section>
+
+        </navbar>
+        
+    </header>
+
+    <section id="hero">
+        <div id="left">
+            <h1><i>Real-time</i> <br>Air Quality<br> <i>you can trust.</i></h1>
+        </div>
+        <div id="hero-right">
+            <img src="https://www.shutterstock.com/image-vector/mental-health-concept-pretty-young-600nw-2464793253.jpg">
+
+        </div>
+       
+    </section>
+
+    <section id="aqi-card">
+        <div id="aqi-h1">
+            <h1>Check your AQI</h1>
+                <span class="search-icon">
+                   <i class="fa-solid fa-magnifying-glass"></i>
+                </span>
+                <input id="city-input" placeholder="Enter city (e.g. Delhi, Mumbai, London)" />
+                <button id="chkbtn">Check</button> 
+        </div>
+
+        <br>
+        <div id="card">
+            <div id="aqi-icon">
+                <i class="fa-solid fa-sun"></i>
+            </div>
+            <h3> Air Quality Index (PM2.5) in your area : </h3>
+            <h3> Category: </h3>
+            <h3> OpenAQI Suggestion: </h3>
+        </div>
+        
+    </section>
+    
+</body>
+</html>
